@@ -25,3 +25,10 @@ where id not in (
 	select min(id) id 
 	from inet.users 
 	group by email)
+
+5)
+select rowid, email
+from (
+select email, row_number() over(partition by email order by email) rn
+from inet.users) i
+where rn>1
