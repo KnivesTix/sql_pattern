@@ -1,0 +1,14 @@
+SELECT ORACLE_USERNAME, OS_USER_NAME, LOCKED_MODE, OBJECT_NAME, OBJECT_TYPE
+  FROM V$LOCKED_OBJECT A, DBA_OBJECTS B
+ WHERE A.OBJECT_ID = B.OBJECT_ID;
+
+select (select USERNAME from V$SESSION where SID = A.SID) BLOCKER,
+       A.SID,
+       ' is blocking ',
+       (select USERNAME from V$SESSION where SID = B.SID) BLOCKEE,
+       B.SID
+  from V$LOCK A, V$LOCK B
+ where A.BLOCK = 1
+   and B.REQUEST > 0
+   and A.ID1 = B.ID1
+   and A.ID2 = B.ID2
