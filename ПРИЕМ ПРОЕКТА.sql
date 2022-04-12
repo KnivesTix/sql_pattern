@@ -9,9 +9,9 @@ order by uploaded desc;
 */
 -- ���� ������������� ��������� �� - ���
 update op_loadlog a
-set id_loadlog_status = 2
+set id_loadlog_status = 3
 where id_loadlog in (select max(id_loadlog) from op_loadlog  where id_loadlog_type = 21 and id_loadlog_status = 1);
--------jdfgkdfgkjdnfkgjndfgndfdfkd;fmdo
+-------jdfgkdfgkjdnfkgjndfgndfdfkdfmdo
 update MSKMEDSTAT.OP_PERSON_LPU
 set archive = 0
 , dateout = null
