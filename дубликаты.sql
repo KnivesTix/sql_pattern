@@ -5,6 +5,23 @@ FROM internet.users u
 ) 
 SELECT email, R FROM c GROUP BY email,R HAVING COUNT(*)>1
 
+- пересечение диапазонов дат (объединить таблицу саму с собой)
+select a.empno,a.ename,
+ 'project '||b.proj_id||
+ ' overlaps project '||a.proj_id as msg
+ from emp_project a,
+ emp_project b
+ where a.empno = b.empno
+ and b.proj_start >= a.proj_start --дата начала больше или равна другой
+ and b.proj_start <= a.proj_end -- дата начала меньше или равно даты завершения
+ and a.proj_id != b.proj_id -- и идентификаторы не равны
+
+select id,last_name,
+sum(id) over () sum1, --общая сумма
+sum(id) over (order by id) sum2, --нарастающий итог
+sum(id) over (partition by last_name order by id, last_name) sum3 --сумма в группе
+from family;
+
 2)
 select * from inet.users h 
 where exists 
